@@ -68,7 +68,8 @@ def compute_gemm_call(model, input_shape, batch_size, model_type, args, device):
         print("vision task's dummy input shape : ", dummy_input.shape)
     
     model = model.to(device)
-    out = model(dummy_input)
+    with torch.no_grad():
+        out = model(dummy_input)
     
     out_strs = ''
     if model_type in 'nlp':
