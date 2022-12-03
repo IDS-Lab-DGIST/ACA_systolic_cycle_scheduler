@@ -36,7 +36,7 @@ class Hook_fwd():
         self.hook.remove()
 
 
-def compute_gemm_call(model, input_shape, batch_size, model_type, args):
+def compute_gemm_call(model, input_shape, batch_size, model_type, args, device):
     forward_hook_list = []
     print("compute gemm call module")
     for n, m in model.named_modules():
@@ -59,15 +59,15 @@ def compute_gemm_call(model, input_shape, batch_size, model_type, args):
         #elif 추 후 추가할 모델이 있으면 추가
     
     if model_type == 'nlp':
-        dummy_input = torch.randint(0, 10000, [batch_size, input_shape]).cuda()
+        dummy_input = torch.randint(0, 10000, [batch_size, input_shape]).to(device)
         print("nlp task's dummy input shape : ", dummy_input.shape)
     
     elif model_type == 'vision':
         in_ch = 3
-        dummy_input = torch.randn(batch_size, in_ch, input_shape, input_shape).cuda()       
+        dummy_input = torch.randn(batch_size, in_ch, input_shape, input_shape).to(device)       
         print("vision task's dummy input shape : ", dummy_input.shape)
     
-    model = model.cuda()
+    model = model.to(device)
     out = model(dummy_input)
     
     out_strs = ''
@@ -227,8 +227,8 @@ def main():
     if model_type==None:
         print("Not a valid model name, plz try new model name again")
         return
-    
-    compute_gemm_call(model, input_shape, batch_size, model_type, args)
+    device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+    compute_gemm_call(model, input_shape, batch_size, model_type, args, device)
 
 if __name__ == '__main__':
     main()
