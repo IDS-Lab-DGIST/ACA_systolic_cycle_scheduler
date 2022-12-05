@@ -31,11 +31,11 @@ PE's width, PE's height, EA
 256 256 1 (256x256 systolic array 1EA)
 ```
 
-## Demo (fully automated run output [load-balance greedy, block-wise dijkstra (avg)], generated txt)
+## Demo (fully automated run)
 ```shell
 sh simple_run.sh
 ```
-Demo is simple run
+Demo is simple run ( [load-balance greedy, block-wise dijkstra (avg)] )
 
 ## Detailed
 ### Get GEMM of each network's layer (saved result in ./ACA2/resource)
