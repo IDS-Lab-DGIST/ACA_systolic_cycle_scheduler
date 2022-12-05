@@ -1,4 +1,5 @@
 searchdir='/computer_architecture/ACA2/resource'
+systolicdir='/computer_architecture/systolic.txt'
 if [ -f "/computer_architecture/ACA2/GEN_CYCLE" ];
 then
     echo "compute systolic in ACA2/resource"
@@ -7,6 +8,7 @@ else
     make -C /computer_architecture/ACA2/ clean
     make -C /computer_architecture/ACA2/
 fi
+cp $systolicdir $searchdir/systolic.txt
 
 for file in $searchdir/*_summary.txt
 do 
