@@ -38,17 +38,20 @@ sh simple_run.sh
 Demo is simple run ( [load-balance greedy, block-wise dijkstra (avg)] )
 
 ## Detailed
-### Get GEMM of each network's layer (saved result in ./ACA2/resource)
+### Get GEMM of each network's layer 
+####(saved result in ./ACA2/resource)
 ```shell
 sh run_layer_to_matrix.sh
 ```
-### Compute GEMM's cycle of each systolic layer (saved ./result/ (cycle_$(modelname)_summary.txt)
+### Compute GEMM's cycle of each systolic layer 
+#### (saved ./result/ (cycle_$(modelname)_summary.txt)
 ```shell
 cd ./ACA2/
 sh compute_systolic_cycle.sh
 ```
 
-### scheduling algorithms (greedy, load balancing greedy. block-wise dijkstra)
+### scheduling algorithms 
+#### (greedy, load balancing greedy. block-wise dijkstra)
 ```shell
 cd /compute_architecture/
 sh run_dijkstra.sh (blockwise-dijkstra)
