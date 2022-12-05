@@ -29,13 +29,14 @@ PE's width, PE's height, EA
 64 64 3 (64x64 systolic array 3EA)
 128 128 1 (128x128 systolic array 1EA)
 256 256 1 (256x256 systolic array 1EA)
-
 ```
 
 ## Demo (fully automated run output [load-balance greedy, block-wise dijkstra (avg)], generated txt)
 ```shell
 sh simple_run.sh
 ```
+Demo is simple run
+
 ## Detailed
 ### Get GEMM of each network's layer (saved result in ./ACA2/resource)
 ```shell
