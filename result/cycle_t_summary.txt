@@ -1,0 +1,19 @@
+
+Systolic row : 64 Systolic col : 64
+DNN name : t_summary.txt
+41344 41344 41344 67328 37760 165376 90496 41344 41344 41344 67328 37760 165376 90496 446 
+DNN name : t_summary.txt
+Total cycle : 970430
+
+Systolic row : 128 Systolic col : 128
+DNN name : t_summary.txt
+11360 11360 11360 23232 23232 45440 23648 11360 11360 11360 23232 23232 45440 23648 287 
+DNN name : t_summary.txt
+Total cycle : 299551
+
+Systolic row : 256 Systolic col : 256
+DNN name : t_summary.txt
+14560 14560 14560 23232 23232 30912 26848 14560 14560 14560 23232 23232 30912 26848 319 
+DNN name : t_summary.txt
+Total cycle : 296127
+
