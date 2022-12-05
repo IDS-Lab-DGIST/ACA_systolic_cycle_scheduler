@@ -1,0 +1,181 @@
+
+=================================
+LayerName : conv1
+InputRow : 25000
+InputCol : 147
+WeightRow : 147
+WeightCol : 64
+OutputRow : 25000
+OutputCol : 64
+==================================
+                
+=================================
+LayerName : layer1.0.conv1
+InputRow : 6250
+InputCol : 576
+WeightRow : 576
+WeightCol : 64
+OutputRow : 6250
+OutputCol : 64
+==================================
+                
+=================================
+LayerName : layer1.0.conv2
+InputRow : 6250
+InputCol : 576
+WeightRow : 576
+WeightCol : 64
+OutputRow : 6250
+OutputCol : 64
+==================================
+                
+=================================
+LayerName : layer1.1.conv1
+InputRow : 6250
+InputCol : 576
+WeightRow : 576
+WeightCol : 64
+OutputRow : 6250
+OutputCol : 64
+==================================
+                
+=================================
+LayerName : layer1.1.conv2
+InputRow : 6250
+InputCol : 576
+WeightRow : 576
+WeightCol : 64
+OutputRow : 6250
+OutputCol : 64
+==================================
+                
+=================================
+LayerName : layer2.0.conv1
+InputRow : 1690
+InputCol : 576
+WeightRow : 576
+WeightCol : 128
+OutputRow : 1690
+OutputCol : 128
+==================================
+                
+=================================
+LayerName : layer2.0.conv2
+InputRow : 1690
+InputCol : 1152
+WeightRow : 1152
+WeightCol : 128
+OutputRow : 1690
+OutputCol : 128
+==================================
+                
+=================================
+LayerName : layer2.1.conv1
+InputRow : 1690
+InputCol : 1152
+WeightRow : 1152
+WeightCol : 128
+OutputRow : 1690
+OutputCol : 128
+==================================
+                
+=================================
+LayerName : layer2.1.conv2
+InputRow : 1690
+InputCol : 1152
+WeightRow : 1152
+WeightCol : 128
+OutputRow : 1690
+OutputCol : 128
+==================================
+                
+=================================
+LayerName : layer3.0.conv1
+InputRow : 490
+InputCol : 1152
+WeightRow : 1152
+WeightCol : 256
+OutputRow : 490
+OutputCol : 256
+==================================
+                
+=================================
+LayerName : layer3.0.conv2
+InputRow : 490
+InputCol : 2304
+WeightRow : 2304
+WeightCol : 256
+OutputRow : 490
+OutputCol : 256
+==================================
+                
+=================================
+LayerName : layer3.1.conv1
+InputRow : 490
+InputCol : 2304
+WeightRow : 2304
+WeightCol : 256
+OutputRow : 490
+OutputCol : 256
+==================================
+                
+=================================
+LayerName : layer3.1.conv2
+InputRow : 490
+InputCol : 2304
+WeightRow : 2304
+WeightCol : 256
+OutputRow : 490
+OutputCol : 256
+==================================
+                
+=================================
+LayerName : layer4.0.conv1
+InputRow : 160
+InputCol : 2304
+WeightRow : 2304
+WeightCol : 512
+OutputRow : 160
+OutputCol : 512
+==================================
+                
+=================================
+LayerName : layer4.0.conv2
+InputRow : 160
+InputCol : 4608
+WeightRow : 4608
+WeightCol : 512
+OutputRow : 160
+OutputCol : 512
+==================================
+                
+=================================
+LayerName : layer4.1.conv1
+InputRow : 160
+InputCol : 4608
+WeightRow : 4608
+WeightCol : 512
+OutputRow : 160
+OutputCol : 512
+==================================
+                
+=================================
+LayerName : layer4.1.conv2
+InputRow : 160
+InputCol : 4608
+WeightRow : 4608
+WeightCol : 512
+OutputRow : 160
+OutputCol : 512
+==================================
+                
+=================================
+LayerName : fc
+InputRow : 10
+InputCol : 512
+WeightRow : 512
+WeightCol : 1000
+OutputRow : 10
+OutputCol : 1000
+==================================
+                

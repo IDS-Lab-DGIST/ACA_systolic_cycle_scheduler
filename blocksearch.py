@@ -1,10 +1,43 @@
 import numpy as np
 from collections import deque
 import copy
-
+import argparse
+from pathlib import Path
+import os
 global graph
 
 graph=dict()
+
+parser = argparse.ArgumentParser("Schedule Estimator Using Blockwise-Dijkstra")
+parser.add_argument('--input_path', type=str, default='./result', help="summary path insert (default : ./result)")
+parser.add_argument('--mode', type=str, default='avg', help="compute Dijkstra mode |avg|std|min| (default : avg)")
+
+
+def get_summary(input_path):
+    if not isinstance(input_path, Path):
+        temp_path = Path(input_path)
+    else:
+        temp_path = input_path
+    name=[]
+    block = []
+    
+    for network_summary_path in temp_path.glob('*'):
+        f= open(network_summary_path,'r')
+        data = f.readlines()
+        systolic_count = 0
+        for T in data:
+            T = T.replace("\n", "")
+            L = T.split(' ')
+            if L[0] == 'Systolic':
+                systolic_count+=1
+            if L[0] == 'DNN':
+                if L[-1][:-12] not in name:
+                    name.append(L[-1][:-12])
+            if len(T.split(' ')) > 9:
+                block.append(makeblock(T.split(' '), 6))
+    
+    return name, block, systolic_count
+
 
 def makeblock(argparse, n): 
     tmp = np.array(argparse[:-1],dtype=np.int64)
@@ -40,93 +73,10 @@ def makegraph(block, name, m):
                 else:
                     graph[f"{name[c%m]}-{a}+{b}"].append(['leaf'])
     
-    #print(graph)
-
     return 0
 
 import heapq
 
-# def dijkstra(graph, root, name, limit=0):
-#     if limit ==0:
-#         limit = float('inf') 
-#     distances = {node: np.array([],dtype=object) for node in graph}
-#     #print(distances)
-#     tmp1 = np.array([],dtype=object)
-#     distances[root] = np.append(distances[root],np.zeros(shape=(len(name), ),dtype=np.int64))
-#     usemodel=dict()
-#     time = np.zeros(shape=(len(name),),dtype=np.int64)
-#     for i in range(0, len(name)):
-#         usemodel[name[i]] = 0
-#     usearr = np.zeros(shape=(len(name),),dtype=np.int64)
-#     queue = []
-
-#     heapq.heappush(queue, [root, distances[root]])
-
-#     while queue:
-#         current_blk, blk_cycle = heapq.heappop(queue)
-#         #print(f"name: {current_blk}")
-
-#         print(blk_cycle)
-#         #print(path)
-#         if graph[current_blk][0] != ['leaf']:  
-
-#             #print(graph[current_blk])
-#             #print(graph[current_blk][0])
-
-#             for new_destination, new_distance in graph[current_blk]:
-
-#                 #print(new_destination)
-#                 #print(f"blk: {new_distance}")
-#                 #if len(current_blk) != 4:
-#                 block, arr = new_destination.split('+')
-#                 blkname = (block[:-2])
-#                 stgname = int(block[-1:])
-#                 #print(blkname)
-#                 #print(usemodel[blkname])
-#                 delay = max(usemodel[blkname], usearr[int(arr)])
-#                 #print(delay)
-#                 #print(path)
-#                 usearr[int(arr)] = delay + new_distance
-#                 #print(usearr)
-#                 tmp2 = np.array([],dtype=np.int64)
-#                 for i in range(0,len(name)):
-#                     if blkname == name[i]:
-#                         usemodel[name[i]] = delay+ new_distance
-#                         tmp2 = np.append(tmp2, delay+new_distance)
-#                     else:
-#                         tmp2 = np.append(tmp2, 0)
-#                 #print(tmp2)
-#                 distance = blk_cycle + delay + tmp2
-#                 #print(distance)
-#                 #print(blk_cycle)
-#                 #print(new_distance)
-#                 #print(blk_cycle)
-
-                
-
-#                 if max(distance) < limit:
-#                     #print(new_destination)
-#                     #print(distance)               
-#                     distances[new_destination]=np.append(distances[new_destination], distance)
-#                     #print(f"length: {len(distances[new_destination])}")
-#                     heapq.heappush(queue, [new_destination, distance])
-#                     #print(queue)
-
-
-#                     """
-#                         if blkname == name[0]:
-#                             usemodel[name[0]] = node[1]
-#                             time[0] += node[1]
-#                         if blkname == name[1]:
-#                             usemodel[name[1]] = node[1] 
-#                             time[1] += node[1]
-#                         if blkname == name[2]:
-#                             usemodel[name[2]] = node[1]
-#                             time[2] += node[1]
-#                     """
-
-#     #print("?")
-#     return distances
 
 class Node:
     
@@ -377,23 +327,14 @@ def dfs(graph, start_node, limit, name):
 
 
 if __name__ == '__main__':
-    txt, mode = input().split(' ')
-    f= open(txt,'r')
-    data = f.readlines()
-    count = 0
-    name=[]
-    block = []
+
+    args = parser.parse_args()
+    mode = args.mode
+    graph = dict()
     graph.clear()
-    for T in data:
-        T = T.replace("\n", "")
-        L = T.split(' ')
-        if L[0] == 'Systolic':
-            count+=1
-        if L[0] == 'DNN':
-            if L[-1][:-12] not in name:
-                name.append(L[-1][:-12])
-        if len(T.split(' ')) > 9:
-            block.append(makeblock(T.split(' '), 6))
+    
+    name, block, count = get_summary(args.input_path)
+
     #print(block)
     makegraph(block, name, count)
     #print(graph)
