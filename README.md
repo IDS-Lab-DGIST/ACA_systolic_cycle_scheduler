@@ -39,7 +39,7 @@ Demo is simple run ( [load-balance greedy, block-wise dijkstra (avg)] )
 
 ## Detailed
 ### Get GEMM of each network's layer 
-####(saved result in ./ACA2/resource)
+#### (saved result in ./ACA2/resource)
 ```shell
 sh run_layer_to_matrix.sh
 ```
