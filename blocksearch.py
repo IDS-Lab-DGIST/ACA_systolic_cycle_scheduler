@@ -61,7 +61,7 @@ import heapq
 #     queue = []
 
 #     heapq.heappush(queue, [root, distances[root]])
-    
+
 #     while queue:
 #         current_blk, blk_cycle = heapq.heappop(queue)
 #         #print(f"name: {current_blk}")
@@ -69,12 +69,12 @@ import heapq
 #         print(blk_cycle)
 #         #print(path)
 #         if graph[current_blk][0] != ['leaf']:  
-            
+
 #             #print(graph[current_blk])
 #             #print(graph[current_blk][0])
 
 #             for new_destination, new_distance in graph[current_blk]:
-                
+
 #                 #print(new_destination)
 #                 #print(f"blk: {new_distance}")
 #                 #if len(current_blk) != 4:
@@ -101,9 +101,9 @@ import heapq
 #                 #print(blk_cycle)
 #                 #print(new_distance)
 #                 #print(blk_cycle)
+
                 
-                
-                
+
 #                 if max(distance) < limit:
 #                     #print(new_destination)
 #                     #print(distance)               
@@ -112,7 +112,7 @@ import heapq
 #                     heapq.heappush(queue, [new_destination, distance])
 #                     #print(queue)
 
-                    
+
 #                     """
 #                         if blkname == name[0]:
 #                             usemodel[name[0]] = node[1]
@@ -124,7 +124,7 @@ import heapq
 #                             usemodel[name[2]] = node[1]
 #                             time[2] += node[1]
 #                     """
-            
+
 #     #print("?")
 #     return distances
 
@@ -167,7 +167,7 @@ class Node:
             if ['leaf'] in child:
                 return True
         return False
-       
+
 def dijkstra(graph,root,name,limit):
     v=[]
     ret=[]
@@ -444,4 +444,4 @@ if __name__ == '__main__':
 
 
 
-    
+
