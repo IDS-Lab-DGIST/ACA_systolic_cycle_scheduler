@@ -25,7 +25,7 @@ bert-based-uncased 10 256
 ```
 #systolic.txt
 PE's width, PE's height, EA
-```
+
 64 64 3 (64x64 systolic array 3EA)
 128 128 1 (128x128 systolic array 1EA)
 256 256 1 (256x256 systolic array 1EA)
