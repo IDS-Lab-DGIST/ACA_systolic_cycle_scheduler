@@ -211,6 +211,9 @@ def main():
     batch_size = args.batch_size
     input_shape = args.input_shape
     output_dir = args.output_dir
+    if not os.path.exists(output_dir):
+        print(f'generate resource folder {output_dir}')
+        os.makedirs(output_dir)
     nlp_trigger = False
     try:
         model = timm.create_model(model_name, pretrained=True)
