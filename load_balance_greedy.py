@@ -81,15 +81,16 @@ class Network():
         self.name = network_name
         self.network_cycle = edict()
         self.remain_total_cycle = edict()
+        self.run_sys_history = []
         
         for sys_index in parsing_dict.keys():
             self.network_cycle[sys_index] = parsing_dict[sys_index][self.name]['layer_cycle']
             self.remain_total_cycle[sys_index] = sum(self.network_cycle[sys_index])
-        print(self.remain_total_cycle)
         self.current_running_idx = 0
         self.current_cycle = 0
         self.systolic = None
         self.verbose = verbose
+        
     def get_remain_total_cycle(self):
         return [(sys_name, self.remain_total_cycle[sys_name] + self.current_cycle) for sys_name in self.remain_total_cycle.keys()]
     
@@ -103,7 +104,9 @@ class Network():
             self.remain_total_cycle[sys_index] = sum(self.network_cycle[sys_index][self.current_running_idx:])
         self.current_cycle = 0
         self.systolic.finish_layer_print(self.name, self.current_running_idx)
-        self.systolic.update_run_systolic_cycle(self.network_cycle[sys_index][self.current_running_idx-1])
+        self.systolic.update_run_systolic_cycle(self.network_cycle[self.systolic.sys_name][self.current_running_idx-1])
+        sys_history = f'{self.current_running_idx-1} : {self.systolic.sys_name}_{self.systolic.sys_idx}'
+        self.run_sys_history.append(sys_history)
         self.del_systolic()
 
     def get_current_remain_cycle(self, pre_compute_cycle=0):
@@ -139,7 +142,7 @@ class Network():
     def del_systolic(self):
         self.systolic = None
 
-def set_layer_and_calculate(list_network, sys_list, i, output_cycle = [], verbose=True):
+def set_layer_and_calculate(list_network, sys_list, i, output_list, output_cycle = [], verbose=True):
     current_pool = []
     current_total_cycle_list = []
     most_powerful_sys = sys_list[0]
@@ -154,6 +157,7 @@ def set_layer_and_calculate(list_network, sys_list, i, output_cycle = [], verbos
             print("********"*20)
     
     if temp_idx is not None:
+        output_list.append(list_network[temp_idx])
         list_network.pop(temp_idx) # remove network
         print(list_network)
         
@@ -166,7 +170,6 @@ def set_layer_and_calculate(list_network, sys_list, i, output_cycle = [], verbos
     for network in list_network:
         current_total_cycle_list.append(network.remain_total_cycle[most_powerful_sys.sys_name])
     print("======"*20)
-    print("using most powerful cycle in time ", i)
     print([network.name for network in list_network])
     print(current_total_cycle_list)
     print("======"*20)
@@ -257,16 +260,20 @@ def main(args):
         list_network.append(Network(parsing_dict, key))
 
     return_trigger = True
+    output_list = []
     output_cycles = []
     i = 0
     while return_trigger:
-        return_trigger = set_layer_and_calculate(list_network, sys_list, i, output_cycle = output_cycles, verbose=True)
+        return_trigger = set_layer_and_calculate(list_network, sys_list, i, output_list, output_cycle = output_cycles, verbose=True)
         print(i, return_trigger)
         i+=1
-    print(sum(output_cycles))
+    
+    print("total cycle ", sum(output_cycles))
     for systolic_layer in sys_list:
         print(f"{systolic_layer.sys_name} : cycle {systolic_layer.run_systolic_cycle}")
-    print(output_cycles)
+    
+    for network in output_list:
+        print(f"{network.name} : run history {network.run_sys_history}")
 
 
 if __name__ == '__main__':

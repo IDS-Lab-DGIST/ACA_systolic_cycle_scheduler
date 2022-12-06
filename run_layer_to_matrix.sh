@@ -1,4 +1,6 @@
 i=1
+rm -rf /computer_architecture/ACA2/resource
+mkdir /computer_architecture/ACA2/resource
 while read line || [ -n "$line" ]; do
     printf "\n\n\n"
     printf "start layer_to_matrix.py"

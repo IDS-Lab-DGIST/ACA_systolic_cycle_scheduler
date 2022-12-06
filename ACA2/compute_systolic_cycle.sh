@@ -9,6 +9,7 @@ else
     make -C /computer_architecture/ACA2/
 fi
 cp $systolicdir $searchdir/systolic.txt
+rm -rf /computer_architecture/result/*
 
 for file in $searchdir/*_summary.txt
 do 
