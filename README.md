@@ -1,6 +1,7 @@
 # ACA_systolic_cycle_scheduler
 Multi-user scheduling simulator for submitting Advanced Computer Architecture tasks (DGIST IC606c)  
-Authors : Dahoon Park, Jooyeon Lee, Jahyun Koo, Suengpyo Lee
+**Authors : Dahoon Park, Jooyeon Lee, Jahyun Koo, Suengpyo Lee**
+
 
 ## Introduction
 This project is based on a docker, so the docker must be installed first.  
@@ -31,11 +32,13 @@ PE's width, PE's height, EA
 256 256 1 (256x256 systolic array 1EA)
 ```
 
+
 ## Demo (fully automated run)
 ```shell
 sh simple_run.sh
 ```
 Demo is simple run ( [load-balance greedy, block-wise dijkstra (avg)] )
+
 
 ## Detailed
 ### Get GEMM of each network's layer 
