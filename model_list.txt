@@ -1,2 +1,5 @@
 resnet18 10 100
-resnet50 5 256
+resnet18 20 100
+resnet18 30 512
+resnet50 20 256
+bert-base-uncased 5 512

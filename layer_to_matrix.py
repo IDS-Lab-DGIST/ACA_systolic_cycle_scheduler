@@ -11,6 +11,7 @@ from pathlib import Path
 import argparse
 import os
 from transformers.models.bert.modeling_bert import BertSelfAttention
+from random import randint
 
 parser = argparse.ArgumentParser("Extract call's GEMM from a model")
 parser.add_argument('--model_name', type=str, default='bert-base-uncased', help="model name using in timm or huggingface")
@@ -191,11 +192,12 @@ OutputCol : {w_mat.size()[0]}
             
     print(out_strs)
     
-    out_txt_path = f'{args.model_name}_summary.txt'
+    out_txt_path = f'{args.model_name}_bs_{args.batch_size}_is_{args.input_shape}_summary.txt'
     if "/" in out_txt_path:
         out_txt_path = out_txt_path.split("/")[-1]
-
     out_txt_path = os.path.join(args.output_dir, out_txt_path)
+    if os.path.exists(out_txt_path):
+        out_txt_path = out_txt_path[:-11] + str(randint(0, 10000)) + '_summary.txt'
     with open(f'{out_txt_path}', "w+") as f:
         f.write(out_strs)
     print("finished")

@@ -144,20 +144,24 @@ def set_layer_and_calculate(list_network, sys_list, i, output_cycle = [], verbos
     current_total_cycle_list = []
     most_powerful_sys = sys_list[0]
 
+    temp_idx = None
     for i in range(len(list_network)):
-        if list_network[i].remain_total_cycle[most_powerful_sys.sys_name] ==0:
+        if list_network[i].remain_total_cycle[most_powerful_sys.sys_name]==0:
             print("********"*20)
             print("finished network : ", list_network[i].name)
+            temp_idx = i
             print("remove network")
             print("********"*20)
-            list_network.pop(i)
     
+    if temp_idx is not None:
+        list_network.pop(temp_idx) # remove network
+        print(list_network)
+        
     if len(list_network) == 0:
         print("########## finish entire layer ################")
         print("total using cycle : ")
         print("########## finish entire layer ################")
         return False
-    
     # calculate remain cycle in most powerful systolic array
     for network in list_network:
         current_total_cycle_list.append(network.remain_total_cycle[most_powerful_sys.sys_name])
@@ -257,8 +261,9 @@ def main(args):
     i = 0
     while return_trigger:
         return_trigger = set_layer_and_calculate(list_network, sys_list, i, output_cycle = output_cycles, verbose=True)
+        print(i, return_trigger)
         i+=1
-    
+    print(sum(output_cycles))
     print(output_cycles)
 
 
