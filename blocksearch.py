@@ -231,11 +231,11 @@ def dijkstra(graph,root,name,limit):
                         if np.average(tmpmodel.reshape(-1))==-1:
                             continue
                         else:
-                            blk2.usemodel = np.append(blk2.usemodel, np.array([dist for dist in tmpmodel if -1 not in dist]), axis=0)
-                            blk2.usearr = np.append(blk2.usearr, np.array([arr for arr in tmparr if -1 not in arr]), axis=0)
+                            blk2.usemodel = np.append(blk2.usemodel, np.array([dist for dist in tmpmodel if -1 not in dist],dtype=np.int64), axis=0)
+                            blk2.usearr = np.append(blk2.usearr, np.array([arr for arr in tmparr if -1 not in arr],dtype=np.int64), axis=0)
                         path = [r for r in path if len(r) != 0 ]
                         blk2.routes = blk2.routes+path
-                        #print(blk2.usemodel)
+                        # print(blk2.usemodel)
                         # if len(blk2.routes)<4:
                         #     print(f"name:{blk2.name}")
                         #     print(blk2.routes)

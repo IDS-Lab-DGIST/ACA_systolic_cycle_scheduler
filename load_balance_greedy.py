@@ -264,6 +264,8 @@ def main(args):
         print(i, return_trigger)
         i+=1
     print(sum(output_cycles))
+    for systolic_layer in sys_list:
+        print(f"{systolic_layer.sys_name} : cycle {systolic_layer.run_systolic_cycle}")
     print(output_cycles)
 
 
