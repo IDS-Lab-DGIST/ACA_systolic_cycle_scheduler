@@ -22,9 +22,9 @@ resnet18 10 256 # model_name (timm or huggingface), batch_size, input_shape (ima
 resnet50 10 224
 bert-based-uncased 10 256
 ```
-4. write to systolic array in systolic.txt
+4. write to systolic array in systolic.txt (only generated 3 systolic array)
 ```
-#systolic.txt
+#systolic.txt 
 PE's width, PE's height, EA
 
 64 64 3 (64x64 systolic array 3EA)
@@ -32,15 +32,7 @@ PE's width, PE's height, EA
 256 256 1 (256x256 systolic array 1EA)
 ```
 
-
-## Demo (fully automated run)
-```shell
-sh simple_run.sh
-```
-Demo is simple run ( [load-balance greedy, block-wise dijkstra (avg)] )
-
-
-## Detailed
+## Demo
 ### Get GEMM of each network's layer 
 #### (saved result in ./ACA2/resource)
 ```shell
@@ -57,8 +49,8 @@ sh compute_systolic_cycle.sh
 #### (greedy, load balancing greedy. block-wise dijkstra)
 ```shell
 cd /compute_architecture/
-sh run_dijkstra.sh (blockwise-dijkstra)
-sh run_loadbalance.sh (load balance greedy)
-sh run_greedy.sh [network's index default=0] (greedy)
+python blocksearch.py (blockwise-dijkstra | mode: |avg|std|min|)
+python greedy.py (greedy)
+python load_balance_greedy.py (load balance greedy)
 ```
 
