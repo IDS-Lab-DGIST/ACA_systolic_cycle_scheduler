@@ -56,7 +56,7 @@ def makegraph(block, name, m):
     for h in range(0,quo):
         #print(h)
         #print(connect)
-        connect.append([f"{name[h]}-0+0",block[h][0]])
+        connect.append([f"{name[h]}-0+0",block[m*h][0]])
     graph['root'] = connect
     #for i in range(0,mod):
     #    time[i]=0
@@ -66,10 +66,16 @@ def makegraph(block, name, m):
                 graph[f"{name[c%m]}-{a}+{b}"]=[]
                 if b<m-1:
                     for d in range(0,quo):
-                        graph[f"{name[c%m]}-{a}+{b}"].append([f"{name[d%m]}-{a}+{(b+1)}", block[b*m+d][a]])
+                        # print(f"name[{d%m}]-{a}+{b+1}")
+                        # print(f"block[{m*(d%m)+c}][{a}]")
+                        # print(f"a,b,c,d: {a}, {b}, {c}, {d}")
+                        graph[f"{name[c%m]}-{a}+{b}"].append([f"{name[d%m]}-{a}+{(b+1)}", block[m*(d%m)+b+1][a]])
                 elif a<5:
                     for d in range(0,quo):
-                        graph[f"{name[c%m]}-{a}+{b}"].append([f"{name[d%m]}-{(a+1)}+0", block[d][a+1]])
+                        # print(f"name[{d%m}]-{a+1}+{b}")
+                        # print(f"block[{m*(d%m)+c}][{a+1}]")                        
+                        # print(f"a,b,c,d: {a}, {b}, {c}, {d}")
+                        graph[f"{name[c%m]}-{a}+{b}"].append([f"{name[d%m]}-{(a+1)}+0", block[m*(d%m)+c][a+1]])
                 else:
                     graph[f"{name[c%m]}-{a}+{b}"].append(['leaf'])
     
@@ -80,7 +86,8 @@ import heapq
 
 class Node:
     
-    def __init__(self, name, iter):       
+    def __init__(self, name, iter, names):
+        self.names = names       
         self.name = name
         self.iter = iter
         self.block = name[:-2]
@@ -98,16 +105,8 @@ class Node:
             if self.sarr < other.sarr:
                 return True
             elif self.sarr == other.sarr:
-                if self.model == 'resnet18':
-                    return False
-                elif self.model == 'bert':
-                    if other.model == 'resnet18':
-                        return True
-                    else:
-                        return False
-                elif self.model == 'resnet50':
-                    return True
-            else: 
+                return self.names.index(self.model) < self.names.index(other.model)
+            else:
                 return False
         else:
             return False
@@ -121,10 +120,12 @@ class Node:
 def dijkstra(graph,root,name,limit):
     v=[]
     ret=[]
+    if limit == 0:
+        limit = float("inf")
     #print(root)
     #print(limit)
     for node in graph:
-        a = Node(node,len(name))
+        a = Node(node,len(name),name)
         #print(a.children)
         v.append(a)
 
@@ -334,12 +335,12 @@ if __name__ == '__main__':
     graph.clear()
     
     name, block, count = get_summary(args.input_path)
-
+    
     #print(block)
     makegraph(block, name, count)
-    #print(graph)
-    visited, routes = dfs(graph, 'root',0, name)
-    k = dijkstra(graph,'root', name, 10070765488)
+    print(graph)
+    # visited, routes = dfs(graph, 'root',0, name)
+    k = dijkstra(graph,'root', name, 0)
     ret=float("inf")
     result=[]
     idx=0
@@ -379,6 +380,7 @@ if __name__ == '__main__':
         if ret == np.average(node.usemodel[idx]) and mode == 'avg':
             print(f"path: {node.routes[idx]}, cycles: {node.usemodel[idx]} with smallest average")
             print(f"systolic array usage: {node.usearr[idx]} for smallest average")
+
 
 
 
