@@ -11,6 +11,8 @@ from pathlib import Path
 import argparse
 import os
 from transformers.models.bert.modeling_bert import BertSelfAttention
+from transformers.models.distilbert.modeling_distilbert import MultiHeadSelfAttention
+from transformers.models.mobilebert.modeling_mobilebert import MobileBertSelfAttention
 from random import randint
 
 parser = argparse.ArgumentParser("Extract call's GEMM from a model")
@@ -46,7 +48,7 @@ def compute_gemm_call(model, input_shape, batch_size, model_type, args, device):
                 print(n)
                 hook = Hook_fwd(m)
                 forward_hook_list.append([n, hook])
-        elif isinstance(m, BertSelfAttention):
+        elif isinstance(m, BertSelfAttention) or isinstance(m, MobileBertSelfAttention) or isinstance(m, MultiHeadSelfAttention):
             # qkv calculate and compute self-attention 
             for nqkv, mqkv in m.named_modules():
                 if isinstance(mqkv, nn.Linear):
